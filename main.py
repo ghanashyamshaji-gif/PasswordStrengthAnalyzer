@@ -41,3 +41,10 @@ def format_report(report):
     lines += section("Why it is weak:", other_weaknesses, "No length or variety problems")
     lines += section("How to improve it:", report["suggestions"], "Nothing to add")
     return "\n".join(lines)
+
+
+def read_password(show):
+    """Ask for a password; hide the typing when running in a real terminal."""
+    if sys.stdin.isatty() and not show:
+        return getpass.getpass("Enter password to analyze: ")
+    return input("Enter password to analyze: ")
