@@ -60,3 +60,17 @@ class TestKeyboardAndYear(unittest.TestCase):
 
     def test_no_year(self):
         self.assertFalse(has_year("abc12"))
+
+
+class TestFindPatterns(unittest.TestCase):
+    def test_strong_password_has_no_patterns(self):
+        self.assertEqual(find_patterns("k9#Vq2!xLm8@Zt4w"), [])
+
+    def test_multiple_patterns_reported(self):
+        found = find_patterns("Qwerty2024!")
+        self.assertEqual(len(found), 2)
+        self.assertTrue(any("Keyboard" in item for item in found))
+        self.assertTrue(any("year" in item for item in found))
+
+    def test_common_password_reported(self):
+        self.assertTrue(any("Common" in item for item in find_patterns("password")))
