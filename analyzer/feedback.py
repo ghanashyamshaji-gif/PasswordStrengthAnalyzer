@@ -54,3 +54,18 @@ def pattern_suggestions(password):
     if has_year(password):
         tips.append("Don't use years or dates; they are easy to guess")
     return tips
+
+
+def suggest_improvements(password):
+    """List concrete steps that would make this password stronger."""
+    tips = []
+    if len(password) < MIN_LENGTH:
+        tips.append(f"Use at least {MIN_LENGTH} characters (16 or more is even better)")
+    missing = missing_character_types(password)
+    if missing:
+        tips.append("Mix in " + ", ".join(missing))
+    tips.extend(pattern_suggestions(password))
+    if len(password) < 16:
+        tips.append("Try a passphrase of 4+ random words, e.g. correct-horse-battery-staple")
+    tips.append("Use a unique password for every account and store them in a password manager")
+    return tips
