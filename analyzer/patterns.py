@@ -22,3 +22,8 @@ def is_common_password(password):
     if lowered in COMMON_PASSWORDS:
         return True
     return lowered.translate(LEET_MAP) in COMMON_PASSWORDS
+
+
+def has_repeated_chars(password, run=3):
+    """True if any character repeats `run` or more times in a row."""
+    return re.search(r"(.)\1{%d,}" % (run - 1), password) is not None
