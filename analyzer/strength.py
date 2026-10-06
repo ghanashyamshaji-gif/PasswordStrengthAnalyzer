@@ -54,3 +54,14 @@ def calculate_score(password):
     if is_common_password(password):
         score = min(score, 10)
     return max(0, min(100, round(score)))
+
+
+def get_rating(score):
+    """Convert a numeric score into Weak / Medium / Strong / Very Strong."""
+    if score < 30:
+        return "Weak"
+    if score < 60:
+        return "Medium"
+    if score < 80:
+        return "Strong"
+    return "Very Strong"
