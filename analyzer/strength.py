@@ -29,3 +29,14 @@ def calculate_entropy(password):
     if not password:
         return 0.0
     return round(len(password) * math.log2(character_pool_size(password)), 2)
+
+
+def count_character_types(password):
+    """How many of lowercase, uppercase, digit, symbol the password uses (0-4)."""
+    checks = [
+        any(c.islower() for c in password),
+        any(c.isupper() for c in password),
+        any(c.isdigit() for c in password),
+        any(not c.isalnum() for c in password),
+    ]
+    return sum(checks)
