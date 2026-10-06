@@ -1,5 +1,5 @@
 """Estimate how long it would take an attacker to crack a password."""
-from analyzer.patterns import is_common_password
+from analyzer.patterns import find_patterns, is_common_password
 from analyzer.strength import calculate_entropy
 
 # (label, guesses per second) - rough order-of-magnitude figures
@@ -49,7 +49,7 @@ def estimate_crack_time(password):
     """Return {scenario: readable time} for an average-case attack."""
     if not password or is_common_password(password):
         return {label: "instantly" for label, _ in SCENARIOS}
-    entropy = calculate_entropy(password)
+    entropy = effective_entropy(password)
     return {
         label: format_duration(seconds_to_crack(entropy, rate))
         for label, rate in SCENARIOS
@@ -60,7 +60,7 @@ def get_difficulty(password):
     """One-word crack difficulty, judged against the fastest attack scenario."""
     if not password or is_common_password(password):
         return "Instant"
-    entropy = calculate_entropy(password)
+    entropy = effective_entropy(password)
     seconds = seconds_to_crack(entropy, SCENARIOS[-1][1])
     if seconds < DAY:
         return "Very Easy"
@@ -69,3 +69,9 @@ def get_difficulty(password):
     if seconds < 1_000 * YEAR:
         return "Hard"
     return "Very Hard"
+
+
+def effective_entropy(password):
+    """Entropy reduced by 10 bits per weak pattern, since patterns are easier to guess."""
+    bits = calculate_entropy(password)
+    return max(0, bits - 10 * len(find_patterns(password)))
