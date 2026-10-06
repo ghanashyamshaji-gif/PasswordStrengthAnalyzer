@@ -54,3 +54,18 @@ def estimate_crack_time(password):
         label: format_duration(seconds_to_crack(entropy, rate))
         for label, rate in SCENARIOS
     }
+
+
+def get_difficulty(password):
+    """One-word crack difficulty, judged against the fastest attack scenario."""
+    if not password or is_common_password(password):
+        return "Instant"
+    entropy = calculate_entropy(password)
+    seconds = seconds_to_crack(entropy, SCENARIOS[-1][1])
+    if seconds < DAY:
+        return "Very Easy"
+    if seconds < YEAR:
+        return "Easy"
+    if seconds < 1_000 * YEAR:
+        return "Hard"
+    return "Very Hard"
