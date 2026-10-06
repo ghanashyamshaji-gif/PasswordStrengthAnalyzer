@@ -6,7 +6,7 @@ COMMON_PASSWORDS = {
     "abc123", "letmein", "welcome", "admin", "iloveyou", "monkey",
     "dragon", "football", "baseball", "sunshine", "princess", "login",
     "master", "hello", "freedom", "whatever", "trustno1", "passw0rd",
-    "password1", "qwerty123", "1q2w3e4r", "000000", "111111", "123123",
+    "password1", "qwerty123", "1q2w3e4r", "000000", "111111", "123123", "zaq12wsx", "pass123", "1qaz2wsx", "starwars",
 }
 
 # Maps "leetspeak" substitutions back to letters (p@ssw0rd -> password)
