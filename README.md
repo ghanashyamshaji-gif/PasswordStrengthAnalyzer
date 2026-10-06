@@ -11,6 +11,9 @@ A Python tool that analyzes password strength and provides a detailed security a
 - Detection of weak characteristics
 - Suggestions for improving password security
 
+## Tech Stack
+- Python 3
+
 ## Status
 
 🚧 Under active development.
