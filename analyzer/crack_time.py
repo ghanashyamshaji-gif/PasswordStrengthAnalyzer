@@ -37,3 +37,9 @@ def format_duration(seconds):
     if years < 1_000_000_000_000:
         return f"{years / 1_000_000_000:,.0f} billion years"
     return "over a trillion years"
+
+
+def seconds_to_crack(entropy_bits, guesses_per_second):
+    """Average seconds to crack: half the search space divided by guess rate."""
+    entropy_bits = min(entropy_bits, 400)  # avoid float overflow on huge inputs
+    return (2 ** (entropy_bits - 1)) / guesses_per_second
