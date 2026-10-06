@@ -43,3 +43,14 @@ def seconds_to_crack(entropy_bits, guesses_per_second):
     """Average seconds to crack: half the search space divided by guess rate."""
     entropy_bits = min(entropy_bits, 400)  # avoid float overflow on huge inputs
     return (2 ** (entropy_bits - 1)) / guesses_per_second
+
+
+def estimate_crack_time(password):
+    """Return {scenario: readable time} for an average-case attack."""
+    if not password or is_common_password(password):
+        return {label: "instantly" for label, _ in SCENARIOS}
+    entropy = calculate_entropy(password)
+    return {
+        label: format_duration(seconds_to_crack(entropy, rate))
+        for label, rate in SCENARIOS
+    }
