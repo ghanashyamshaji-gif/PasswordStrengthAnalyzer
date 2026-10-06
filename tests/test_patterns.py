@@ -43,3 +43,20 @@ class TestRepeatsAndSequences(unittest.TestCase):
 
     def test_non_sequence(self):
         self.assertFalse(has_sequence("ace"))
+
+
+class TestKeyboardAndYear(unittest.TestCase):
+    def test_keyboard_run(self):
+        self.assertTrue(has_keyboard_pattern("xqwerx"))
+
+    def test_reversed_keyboard_run(self):
+        self.assertTrue(has_keyboard_pattern("poiu"))
+
+    def test_not_a_keyboard_run(self):
+        self.assertFalse(has_keyboard_pattern("q1w2"))
+
+    def test_year_found(self):
+        self.assertTrue(has_year("pass1999"))
+
+    def test_no_year(self):
+        self.assertFalse(has_year("abc12"))
