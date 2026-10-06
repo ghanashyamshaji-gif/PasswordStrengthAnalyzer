@@ -16,4 +16,4 @@ A Python tool that analyzes password strength and provides a detailed security a
 
 ## Status
 
-🚧 Under active development.
+🚧 Core analysis engine complete; command-line interface coming next.
