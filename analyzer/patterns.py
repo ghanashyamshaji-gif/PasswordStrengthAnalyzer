@@ -27,3 +27,17 @@ def is_common_password(password):
 def has_repeated_chars(password, run=3):
     """True if any character repeats `run` or more times in a row."""
     return re.search(r"(.)\1{%d,}" % (run - 1), password) is not None
+
+
+SEQUENCES = ["abcdefghijklmnopqrstuvwxyz", "0123456789"]
+
+
+def has_sequence(password, length=3):
+    """True if the password contains an ascending or descending run like abc or 321."""
+    lowered = password.lower()
+    for seq in SEQUENCES:
+        for candidate in (seq, seq[::-1]):
+            for i in range(len(candidate) - length + 1):
+                if candidate[i:i + length] in lowered:
+                    return True
+    return False
