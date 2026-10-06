@@ -38,3 +38,19 @@ def explain_weaknesses(password):
         reasons.append(f"No {kind}")
     reasons.extend(find_patterns(password))
     return reasons
+
+
+def pattern_suggestions(password):
+    """Advice that targets the specific weak patterns found."""
+    tips = []
+    if is_common_password(password):
+        tips.append("Avoid common passwords and simple swaps like @ for a or 0 for o")
+    if has_repeated_chars(password):
+        tips.append("Don't repeat the same character several times in a row")
+    if has_sequence(password):
+        tips.append("Avoid sequences like abc or 123")
+    if has_keyboard_pattern(password):
+        tips.append("Avoid keyboard runs like qwer or asdf")
+    if has_year(password):
+        tips.append("Don't use years or dates; they are easy to guess")
+    return tips
