@@ -55,3 +55,8 @@ def has_keyboard_pattern(password, length=4):
                 if candidate[i:i + length] in lowered:
                     return True
     return False
+
+
+def has_year(password):
+    """True if the password contains a year from 1900 to 2099."""
+    return re.search(r"(19|20)\d{2}", password) is not None
