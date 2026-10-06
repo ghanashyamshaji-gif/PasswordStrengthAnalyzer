@@ -1,0 +1,24 @@
+"""Score password strength: entropy, 0-100 score, and rating."""
+import math
+import string
+
+from analyzer.patterns import find_patterns, is_common_password
+
+
+def character_pool_size(password):
+    """Size of the character set the password appears to draw from."""
+    pool = 0
+    if any(c in string.ascii_lowercase for c in password):
+        pool += 26
+    if any(c in string.ascii_uppercase for c in password):
+        pool += 26
+    if any(c in string.digits for c in password):
+        pool += 10
+    if any(c in string.punctuation for c in password):
+        pool += len(string.punctuation)
+    if " " in password:
+        pool += 1
+    known = string.ascii_letters + string.digits + string.punctuation + " "
+    if any(c not in known for c in password):
+        pool += 32  # unicode or other unusual characters
+    return pool
