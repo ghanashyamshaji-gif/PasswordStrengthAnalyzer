@@ -20,3 +20,24 @@ def section(title, items, empty_message):
     else:
         lines.append(f"  {empty_message}")
     return lines
+
+
+def format_report(report):
+    """Turn an analysis report dict into printable text."""
+    other_weaknesses = [w for w in report["weaknesses"] if w not in report["patterns"]]
+    lines = [
+        "=" * 56,
+        "PASSWORD STRENGTH REPORT",
+        "=" * 56,
+        f"Strength        : {report['rating']}",
+        f"Score           : {report['score']}/100 {score_bar(report['score'])}",
+        f"Entropy         : {report['entropy']} bits",
+        f"Crack difficulty: {report['crack_difficulty']}",
+        "",
+        "Estimated time to crack (average case):",
+    ]
+    lines.extend(f"  - {label}: {text}" for label, text in report["crack_times"].items())
+    lines += section("Common patterns found:", report["patterns"], "None detected")
+    lines += section("Why it is weak:", other_weaknesses, "No length or variety problems")
+    lines += section("How to improve it:", report["suggestions"], "Nothing to add")
+    return "\n".join(lines)
