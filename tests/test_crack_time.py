@@ -25,3 +25,26 @@ class TestFormatDuration(unittest.TestCase):
 
     def test_huge_values(self):
         self.assertEqual(format_duration(1e13 * YEAR), "over a trillion years")
+
+
+class TestCrackEstimates(unittest.TestCase):
+    def test_seconds_to_crack_math(self):
+        self.assertEqual(seconds_to_crack(11, 1), 1024)
+        self.assertEqual(seconds_to_crack(11, 2), 512)
+
+    def test_huge_entropy_does_not_overflow(self):
+        self.assertGreater(seconds_to_crack(100000, 1), 0)
+
+    def test_common_password_cracks_instantly(self):
+        times = estimate_crack_time("password")
+        self.assertEqual(len(times), len(SCENARIOS))
+        self.assertTrue(all(value == "instantly" for value in times.values()))
+
+    def test_difficulty_labels(self):
+        self.assertEqual(get_difficulty("password"), "Instant")
+        self.assertEqual(get_difficulty("Hello123!"), "Very Easy")
+        self.assertEqual(get_difficulty("k9#Vq2!xLm8@Zt4w"), "Very Hard")
+
+    def test_patterns_reduce_effective_entropy(self):
+        self.assertLess(effective_entropy("Hello123!"), calculate_entropy("Hello123!"))
+        self.assertEqual(effective_entropy("k9#Vq2!xLm8@Zt4w"), calculate_entropy("k9#Vq2!xLm8@Zt4w"))
