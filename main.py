@@ -58,3 +58,17 @@ def parse_args():
                         help="show what you type instead of hiding it")
     # more options go here
     return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    if args.password is not None:
+        password = args.password
+    else:
+        password = read_password(args.show)
+    report = analyze_password(password)
+    print(format_report(report))
+
+
+if __name__ == "__main__":
+    main()
