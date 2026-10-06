@@ -23,3 +23,18 @@ def missing_character_types(password):
     if all(c.isalnum() for c in password):
         missing.append("symbols")
     return missing
+
+
+def explain_weaknesses(password):
+    """List the reasons this password is weak (empty list if none found)."""
+    if not password:
+        return ["Password is empty"]
+    reasons = []
+    if len(password) < 8:
+        reasons.append(f"Too short ({len(password)} characters): short passwords are guessed fast")
+    elif len(password) < MIN_LENGTH:
+        reasons.append(f"Shorter than {MIN_LENGTH} characters")
+    for kind in missing_character_types(password):
+        reasons.append(f"No {kind}")
+    reasons.extend(find_patterns(password))
+    return reasons
