@@ -65,3 +65,14 @@ def get_rating(score):
     if score < 80:
         return "Strong"
     return "Very Strong"
+
+
+def analyze_strength(password):
+    """Run the full strength analysis and return the results as a dict."""
+    score = calculate_score(password)
+    return {
+        "score": score,
+        "rating": get_rating(score),
+        "entropy": calculate_entropy(password),
+        "patterns": find_patterns(password),
+    }
