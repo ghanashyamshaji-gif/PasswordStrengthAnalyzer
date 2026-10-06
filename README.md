@@ -16,7 +16,7 @@ A Python tool that analyzes password strength and provides a detailed security a
 
 ## Usage
 
-````bash
+```bash
 python main.py                  # prompts for a password (hidden when possible)
 python main.py --show           # visible typing
 python main.py -p "MyPass"      # pass directly (stays in shell history)
