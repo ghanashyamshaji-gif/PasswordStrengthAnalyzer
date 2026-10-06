@@ -23,6 +23,12 @@ python main.py -p "MyPass"      # pass directly (stays in shell history)
 python main.py --json -p "x"    # machine-readable output
 ```
 
+## Running the tests
+
+    python run_tests.py
+
+The tests use only the standard library (unittest), so nothing needs installing.
+
 ## Status
 
 🚧 Analysis engine and command-line interface complete; tests coming next.
