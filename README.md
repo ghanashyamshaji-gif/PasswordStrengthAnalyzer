@@ -25,4 +25,4 @@ python main.py --json -p "x"    # machine-readable output
 
 ## Status
 
-🚧 Core analysis engine complete; command-line interface coming next.
+🚧 Analysis engine and command-line interface complete; tests coming next.
