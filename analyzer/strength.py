@@ -22,3 +22,10 @@ def character_pool_size(password):
     if any(c not in known for c in password):
         pool += 32  # unicode or other unusual characters
     return pool
+
+
+def calculate_entropy(password):
+    """Estimated entropy in bits: length * log2(pool size)."""
+    if not password:
+        return 0.0
+    return round(len(password) * math.log2(character_pool_size(password)), 2)
