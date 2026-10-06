@@ -40,3 +40,17 @@ def count_character_types(password):
         any(not c.isalnum() for c in password),
     ]
     return sum(checks)
+
+
+def calculate_score(password):
+    """Strength score from 0 (terrible) to 100 (excellent)."""
+    if not password:
+        return 0
+    entropy_points = min(calculate_entropy(password) / 100, 1) * 60
+    length_points = min(len(password) / 16, 1) * 20
+    variety_points = count_character_types(password) / 4 * 20
+    score = entropy_points + length_points + variety_points
+    score -= 10 * len(find_patterns(password))
+    if is_common_password(password):
+        score = min(score, 10)
+    return max(0, min(100, round(score)))
