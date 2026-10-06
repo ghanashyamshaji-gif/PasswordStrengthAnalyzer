@@ -69,3 +69,11 @@ def suggest_improvements(password):
         tips.append("Try a passphrase of 4+ random words, e.g. correct-horse-battery-staple")
     tips.append("Use a unique password for every account and store them in a password manager")
     return tips
+
+
+def build_feedback(password):
+    """Return both the weaknesses and the improvement tips."""
+    return {
+        "weaknesses": explain_weaknesses(password),
+        "suggestions": suggest_improvements(password),
+    }
