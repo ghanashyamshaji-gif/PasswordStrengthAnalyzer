@@ -60,3 +60,19 @@ def has_keyboard_pattern(password, length=4):
 def has_year(password):
     """True if the password contains a year from 1900 to 2099."""
     return re.search(r"(19|20)\d{2}", password) is not None
+
+
+def find_patterns(password):
+    """Return a list of human-readable descriptions of every weak pattern found."""
+    found = []
+    if is_common_password(password):
+        found.append("Common password (appears in known password lists)")
+    if has_repeated_chars(password):
+        found.append("Repeated characters (e.g. aaa, 111)")
+    if has_sequence(password):
+        found.append("Sequential characters (e.g. abc, 123, cba)")
+    if has_keyboard_pattern(password):
+        found.append("Keyboard pattern (e.g. qwer, asdf)")
+    if has_year(password):
+        found.append("Contains a year (e.g. 1998, 2024)")
+    return found
