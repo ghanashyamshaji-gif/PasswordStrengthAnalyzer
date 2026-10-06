@@ -14,3 +14,11 @@ LEET_MAP = str.maketrans({
     "@": "a", "4": "a", "3": "e", "1": "i", "!": "i",
     "0": "o", "$": "s", "5": "s", "7": "t",
 })
+
+
+def is_common_password(password):
+    """True if the password (or its leetspeak-decoded form) is a known weak password."""
+    lowered = password.lower()
+    if lowered in COMMON_PASSWORDS:
+        return True
+    return lowered.translate(LEET_MAP) in COMMON_PASSWORDS
