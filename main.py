@@ -1,5 +1,6 @@
 """Command-line interface for the Password Strength Analyzer."""
 import argparse
+import json
 import getpass
 import sys
 
@@ -57,6 +58,7 @@ def parse_args():
     parser.add_argument("--show", action="store_true",
                         help="show what you type instead of hiding it")
     # more options go here
+    parser.add_argument("--json", action="store_true", help="print the raw report as JSON")
     return parser.parse_args()
 
 
@@ -67,7 +69,7 @@ def main():
     else:
         password = read_password(args.show)
     report = analyze_password(password)
-    print(format_report(report))
+    print(json.dumps(report, indent=2) if args.json else format_report(report))
 
 
 if __name__ == "__main__":
