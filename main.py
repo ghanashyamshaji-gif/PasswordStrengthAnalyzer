@@ -48,3 +48,13 @@ def read_password(show):
     if sys.stdin.isatty() and not show:
         return getpass.getpass("Enter password to analyze: ")
     return input("Enter password to analyze: ")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Analyze the strength of a password.")
+    parser.add_argument("-p", "--password",
+                        help="password to analyze (stays in shell history, so prefer the prompt)")
+    parser.add_argument("--show", action="store_true",
+                        help="show what you type instead of hiding it")
+    # more options go here
+    return parser.parse_args()
