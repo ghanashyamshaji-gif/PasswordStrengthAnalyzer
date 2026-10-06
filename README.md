@@ -14,6 +14,15 @@ A Python tool that analyzes password strength and provides a detailed security a
 ## Tech Stack
 - Python 3
 
+## Usage
+
+````bash
+python main.py                  # prompts for a password (hidden when possible)
+python main.py --show           # visible typing
+python main.py -p "MyPass"      # pass directly (stays in shell history)
+python main.py --json -p "x"    # machine-readable output
+```
+
 ## Status
 
 🚧 Core analysis engine complete; command-line interface coming next.
