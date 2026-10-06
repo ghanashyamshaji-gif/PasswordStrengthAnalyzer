@@ -1,0 +1,2 @@
+# No external dependencies yet.
+# Core analysis uses Python's standard library only.
