@@ -41,3 +41,17 @@ def has_sequence(password, length=3):
                 if candidate[i:i + length] in lowered:
                     return True
     return False
+
+
+KEYBOARD_ROWS = ["qwertyuiop", "asdfghjkl", "zxcvbnm", "1234567890"]
+
+
+def has_keyboard_pattern(password, length=4):
+    """True if the password contains 4+ neighbouring keys in a row."""
+    lowered = password.lower()
+    for row in KEYBOARD_ROWS:
+        for candidate in (row, row[::-1]):
+            for i in range(len(candidate) - length + 1):
+                if candidate[i:i + length] in lowered:
+                    return True
+    return False
