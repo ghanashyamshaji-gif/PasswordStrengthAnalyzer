@@ -1,0 +1,39 @@
+"""Estimate how long it would take an attacker to crack a password."""
+from analyzer.patterns import is_common_password
+from analyzer.strength import calculate_entropy
+
+# (label, guesses per second) - rough order-of-magnitude figures
+SCENARIOS = [
+    ("Online attack (rate-limited login)", 100),
+    ("Offline attack (slow hash, e.g. bcrypt)", 10_000),
+    ("Offline attack (fast hash, e.g. MD5 on GPUs)", 100_000_000_000),
+]
+
+MINUTE = 60
+HOUR = 3600
+DAY = 86400
+YEAR = 31_557_600
+
+
+def format_duration(seconds):
+    """Turn a number of seconds into a readable string like '3 days'."""
+    if seconds < 1:
+        return "instantly"
+    if seconds < MINUTE:
+        return f"{seconds:.0f} seconds"
+    if seconds < HOUR:
+        return f"{seconds / MINUTE:.0f} minutes"
+    if seconds < DAY:
+        return f"{seconds / HOUR:.0f} hours"
+    if seconds < YEAR:
+        return f"{seconds / DAY:.0f} days"
+    years = seconds / YEAR
+    if years < 1_000:
+        return f"{years:,.0f} years"
+    if years < 1_000_000:
+        return f"{years / 1_000:,.0f} thousand years"
+    if years < 1_000_000_000:
+        return f"{years / 1_000_000:,.0f} million years"
+    if years < 1_000_000_000_000:
+        return f"{years / 1_000_000_000:,.0f} billion years"
+    return "over a trillion years"
