@@ -27,3 +27,18 @@ class TestFormatting(unittest.TestCase):
         self.assertIn("PASSWORD STRENGTH REPORT", text)
         self.assertIn("Weak", text)
         self.assertIn("Common password", text)
+
+
+class TestBreachFormatting(unittest.TestCase):
+    def test_breach_section_only_appears_when_checked(self):
+        report = analyze_password("password")
+        self.assertNotIn("Data breach check", format_report(report))
+        report["breach_count"] = 0
+        text = format_report(report)
+        self.assertIn("Data breach check", text)
+        self.assertIn("Not found in known breaches", text)
+
+    def test_breach_count_is_shown(self):
+        report = analyze_password("password")
+        report["breach_count"] = 1234
+        self.assertIn("Found 1,234 times", format_report(report))
