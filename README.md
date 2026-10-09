@@ -16,6 +16,7 @@ A Python tool that analyzes password strength and provides a detailed security a
 ## Tech Stack
 - Python 3
 - tkinter (graphical interface, included with the standard Python installer on Windows)
+- Have I Been Pwned Pwned Passwords API (optional breach check)
 
 ## Usage
 
