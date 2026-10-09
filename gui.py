@@ -94,3 +94,25 @@ class PasswordApp:
 
     def toggle_show(self):
         self.entry.config(show="" if self.show_var.get() else "*")
+
+    def start_breach_check(self):
+        password = self.password_var.get()
+        if not password:
+            return
+        self.breach_button.config(state="disabled", text="Checking...")
+        threading.Thread(target=self.run_breach_check, args=(password,), daemon=True).start()
+        self.root.after(100, self.poll_results)
+
+    def run_breach_check(self, password):
+        # Runs in a background thread so the window does not freeze during the lookup.
+        self.results.put((password, analyze_password(password, breach_check=True)))
+
+    def poll_results(self):
+        try:
+            password, report = self.results.get_nowait()
+        except queue.Empty:
+            self.root.after(100, self.poll_results)
+            return
+        self.breach_button.config(state="normal", text="Check data breaches")
+        if password == self.password_var.get():  # ignore stale results
+            self.show_report(report)
