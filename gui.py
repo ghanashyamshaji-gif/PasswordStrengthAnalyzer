@@ -61,3 +61,26 @@ class PasswordApp:
                                font=("Consolas", 10), yscrollcommand=scrollbar.set)
         self.details.pack(side="left", fill="both", expand=True)
         scrollbar.config(command=self.details.yview)
+
+    def draw_bar(self, score, color):
+        self.bar.delete("all")
+        self.bar.create_rectangle(0, 0, BAR_WIDTH, BAR_HEIGHT, fill="#e6e6e6", outline="")
+        filled = int(BAR_WIDTH * bar_fraction(score))
+        self.bar.create_rectangle(0, 0, filled, BAR_HEIGHT, fill=color, outline="")
+
+    def set_details(self, text):
+        self.details.config(state="normal")
+        self.details.delete("1.0", "end")
+        self.details.insert("1.0", text)
+        self.details.config(state="disabled")
+
+    def show_report(self, report):
+        color = color_for_rating(report["rating"])
+        self.headline_label.config(text=headline(report), fg=color)
+        self.draw_bar(report["score"], color)
+        self.set_details(format_report(report))
+
+    def clear(self):
+        self.headline_label.config(text=IDLE_TEXT, fg="#666666")
+        self.draw_bar(0, color_for_rating(None))
+        self.set_details("")
