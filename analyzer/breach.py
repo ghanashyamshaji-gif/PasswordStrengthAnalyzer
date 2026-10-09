@@ -21,3 +21,13 @@ def parse_range_response(text, suffix):
             except ValueError:
                 return 0
     return 0
+
+
+def fetch_range(prefix, timeout=5):
+    """Download all breached-hash suffixes that share this 5-character prefix."""
+    request = urllib.request.Request(
+        API_URL + prefix,
+        headers={"User-Agent": "PasswordStrengthAnalyzer-learning-project"},
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        return response.read().decode("utf-8")
