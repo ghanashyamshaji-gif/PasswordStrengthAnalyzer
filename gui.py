@@ -116,3 +116,18 @@ class PasswordApp:
         self.breach_button.config(state="normal", text="Check data breaches")
         if password == self.password_var.get():  # ignore stale results
             self.show_report(report)
+
+
+def run_gui():
+    try:  # sharper text on high-DPI Windows screens; ignored elsewhere
+        from ctypes import windll
+        windll.shcore.SetProcessDpiAwareness(1)
+    except Exception:
+        pass
+    root = tk.Tk()
+    PasswordApp(root)
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    run_gui()
