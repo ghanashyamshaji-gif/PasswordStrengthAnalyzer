@@ -1,0 +1,10 @@
+#!/bin/sh
+# Runs the test suite before every commit; blocks the commit if any test fails.
+output=$(python run_tests.py 2>&1)
+if [ $? -ne 0 ]; then
+    echo "$output"
+    echo ""
+    echo "Tests failed - commit blocked. (Use git commit --no-verify to skip.)"
+    exit 1
+fi
+echo "All tests passed - committing."
