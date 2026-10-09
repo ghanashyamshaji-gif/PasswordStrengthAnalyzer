@@ -43,4 +43,4 @@ With --check-breach the tool asks the Have I Been Pwned "Pwned Passwords" servic
 
 ## Status
 
-🚧 Analysis engine and command-line interface complete; automated tests, pre-commit hook, CI, optional breach check and a graphical interface included.
+🚧 Analysis engine and command-line interface complete; automated tests, pre-commit hook, CI, optional breach check, a graphical interface and a password generator included.
