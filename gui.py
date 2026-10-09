@@ -45,3 +45,19 @@ class PasswordApp:
         ttk.Label(frame, foreground="#666666",
                   text="The breach check sends only the first 5 characters of a hash, never the password."
                   ).pack(anchor="w", pady=(6, 0))
+
+    def build_results(self):
+        frame = ttk.Frame(self.root, padding=(12, 0, 12, 12))
+        frame.pack(fill="both", expand=True)
+        self.headline_label = tk.Label(frame, text="", font=("Segoe UI", 16, "bold"), anchor="w")
+        self.headline_label.pack(fill="x")
+        self.bar = tk.Canvas(frame, width=BAR_WIDTH, height=BAR_HEIGHT, highlightthickness=0)
+        self.bar.pack(anchor="w", pady=8)
+        box = ttk.Frame(frame)
+        box.pack(fill="both", expand=True)
+        scrollbar = ttk.Scrollbar(box)
+        scrollbar.pack(side="right", fill="y")
+        self.details = tk.Text(box, height=22, width=70, wrap="none", state="disabled",
+                               font=("Consolas", 10), yscrollcommand=scrollbar.set)
+        self.details.pack(side="left", fill="both", expand=True)
+        scrollbar.config(command=self.details.yview)
