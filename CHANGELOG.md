@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.4.0
+
+- Document the breach-check API in the README
+- Document the generator in the README
+- Add tests for --generate
+- Add --generate option
+- Add tests for generator
+- Add pattern-free password generation
+- Add secure random password generator
+
 ## v0.3.0
 
 - Document the GUI in the README
