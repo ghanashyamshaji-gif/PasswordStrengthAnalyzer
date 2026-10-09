@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.0
+
+- Document the GUI in the README
+- Add --gui option to the CLI
+- Add run_gui entry point
+- Add background breach check
+- Add live analysis and show-password toggle
+- Add report display methods
+- Add result widgets
+- Add password input widgets
+- Add GUI skeleton
+- Add tests for display helpers
+- Add display helpers
+
 ## v0.2.0
 
 - Add changelog generator script
