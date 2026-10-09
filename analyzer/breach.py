@@ -43,3 +43,12 @@ def check_breach(password, fetcher=fetch_range):
     except OSError:
         return None
     return parse_range_response(text, suffix)
+
+
+def describe_breach(count):
+    """Human-readable summary of a breach count (None means the lookup failed)."""
+    if count is None:
+        return "Not checked (no internet connection or the lookup failed)"
+    if count == 0:
+        return "Not found in known breaches"
+    return f"Found {count:,} times in known data breaches"
