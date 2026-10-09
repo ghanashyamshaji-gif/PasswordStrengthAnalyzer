@@ -33,4 +33,4 @@ The tests use only the standard library (unittest), so nothing needs installing.
 
 ## Status
 
-🚧 Analysis engine and command-line interface complete; automated tests included; automation and CI coming next.
+🚧 Analysis engine and command-line interface complete; automated tests, pre-commit hook and CI included.
