@@ -5,6 +5,7 @@ import getpass
 import sys
 
 from analyzer.breach import describe_breach
+from analyzer.generator import generate_clean_password
 from analyzer.report import analyze_password
 
 
@@ -61,6 +62,7 @@ def parse_args():
     parser.add_argument("--show", action="store_true",
                         help="show what you type instead of hiding it")
     # more options go here
+    parser.add_argument("--generate", type=int, metavar="LENGTH", help="generate a random password of this length, then analyze it")
     parser.add_argument("--gui", action="store_true", help="open the graphical interface")
     parser.add_argument("--check-breach", action="store_true", help="look the password up in known data breaches (needs internet)")
     parser.add_argument("--json", action="store_true", help="print the raw report as JSON")
@@ -73,7 +75,13 @@ def main():
         from gui import run_gui
         run_gui()
         return
-    if args.password is not None:
+    if args.generate:
+        if args.generate < 8:
+            raise SystemExit("--generate needs a length of at least 8")
+        password = generate_clean_password(args.generate)
+        print("Generated password:", password)
+        print()
+    elif args.password is not None:
         password = args.password
     else:
         password = read_password(args.show)
