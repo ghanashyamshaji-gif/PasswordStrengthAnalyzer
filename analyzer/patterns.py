@@ -1,4 +1,5 @@
 """Detect common weak patterns in passwords."""
+import os
 import re
 
 COMMON_PASSWORDS = {
@@ -8,6 +9,19 @@ COMMON_PASSWORDS = {
     "master", "hello", "freedom", "whatever", "trustno1", "passw0rd",
     "password1", "qwerty123", "1q2w3e4r", "000000", "111111", "123123", "zaq12wsx", "pass123", "1qaz2wsx", "starwars",
 }
+
+
+def load_wordlist(path):
+    """Read one password per line from a text file (empty set if the file is missing)."""
+    try:
+        with open(path, encoding="utf-8") as handle:
+            return {line.strip().lower() for line in handle if line.strip()}
+    except OSError:
+        return set()
+
+
+WORDLIST_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "common_passwords.txt")
+COMMON_PASSWORDS |= load_wordlist(WORDLIST_PATH)
 
 # Maps "leetspeak" substitutions back to letters (p@ssw0rd -> password)
 LEET_MAP = str.maketrans({
