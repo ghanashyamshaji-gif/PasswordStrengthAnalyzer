@@ -2,6 +2,8 @@
 import secrets
 import string
 
+from analyzer.patterns import find_patterns
+
 SYMBOLS = "!@#$%^&*()-_=+[]{};:,.?"
 CHARACTER_SETS = [string.ascii_lowercase, string.ascii_uppercase, string.digits, SYMBOLS]
 
@@ -15,3 +17,12 @@ def generate_password(length=16):
     chars += [secrets.choice(everything) for _ in range(length - len(chars))]
     secrets.SystemRandom().shuffle(chars)
     return "".join(chars)
+
+
+def generate_clean_password(length=16, attempts=100):
+    """Like generate_password, but retries until the analyzer finds no weak patterns."""
+    for _ in range(attempts):
+        candidate = generate_password(length)
+        if not find_patterns(candidate):
+            return candidate
+    return candidate
