@@ -4,6 +4,7 @@ import json
 import getpass
 import sys
 
+from analyzer.breach import describe_breach
 from analyzer.report import analyze_password
 
 
@@ -38,6 +39,8 @@ def format_report(report):
         "Estimated time to crack (average case):",
     ]
     lines.extend(f"  - {label}: {text}" for label, text in report["crack_times"].items())
+    if "breach_count" in report:
+        lines += section("Data breach check:", [describe_breach(report["breach_count"])], "")
     lines += section("Common patterns found:", report["patterns"], "None detected")
     lines += section("Why it is weak:", other_weaknesses, "No length or variety problems")
     lines += section("How to improve it:", report["suggestions"], "Nothing to add")
@@ -58,6 +61,7 @@ def parse_args():
     parser.add_argument("--show", action="store_true",
                         help="show what you type instead of hiding it")
     # more options go here
+    parser.add_argument("--check-breach", action="store_true", help="look the password up in known data breaches (needs internet)")
     parser.add_argument("--json", action="store_true", help="print the raw report as JSON")
     return parser.parse_args()
 
@@ -68,7 +72,7 @@ def main():
         password = args.password
     else:
         password = read_password(args.show)
-    report = analyze_password(password)
+    report = analyze_password(password, breach_check=args.check_breach)
     print(json.dumps(report, indent=2) if args.json else format_report(report))
 
 
