@@ -31,3 +31,32 @@ class TestHashingAndParsing(unittest.TestCase):
 
     def test_garbage_count_is_treated_as_zero(self):
         self.assertEqual(parse_range_response("ABC:xyz", "ABC"), 0)
+
+
+class TestCheckBreach(unittest.TestCase):
+    def test_returns_count_and_sends_only_the_prefix(self):
+        def fake_fetcher(prefix):
+            self.assertEqual(prefix, "5BAA6")
+            return SAMPLE
+
+        self.assertEqual(check_breach("password", fetcher=fake_fetcher), 12345)
+
+    def test_password_not_in_response_returns_zero(self):
+        self.assertEqual(check_breach("k9#Vq2!xLm8@Zt4w", fetcher=lambda prefix: SAMPLE), 0)
+
+    def test_network_error_returns_none(self):
+        def broken(prefix):
+            raise OSError("offline")
+
+        self.assertIsNone(check_breach("password", fetcher=broken))
+
+    def test_empty_password_skips_lookup(self):
+        def should_not_run(prefix):
+            raise AssertionError("lookup should not happen")
+
+        self.assertEqual(check_breach("", fetcher=should_not_run), 0)
+
+    def test_describe_breach(self):
+        self.assertIn("Not checked", describe_breach(None))
+        self.assertEqual(describe_breach(0), "Not found in known breaches")
+        self.assertEqual(describe_breach(1234), "Found 1,234 times in known data breaches")
