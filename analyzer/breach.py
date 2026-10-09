@@ -31,3 +31,15 @@ def fetch_range(prefix, timeout=5):
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return response.read().decode("utf-8")
+
+
+def check_breach(password, fetcher=fetch_range):
+    """Return how many breaches contain the password, or None if the lookup failed."""
+    if not password:
+        return 0
+    prefix, suffix = split_hash(password)
+    try:
+        text = fetcher(prefix)
+    except OSError:
+        return None
+    return parse_range_response(text, suffix)
