@@ -84,3 +84,13 @@ class PasswordApp:
         self.headline_label.config(text=IDLE_TEXT, fg="#666666")
         self.draw_bar(0, color_for_rating(None))
         self.set_details("")
+
+    def on_change(self, *_):
+        password = self.password_var.get()
+        if password:
+            self.show_report(analyze_password(password))
+        else:
+            self.clear()
+
+    def toggle_show(self):
+        self.entry.config(show="" if self.show_var.get() else "*")
