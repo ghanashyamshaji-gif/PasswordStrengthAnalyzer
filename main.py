@@ -61,6 +61,7 @@ def parse_args():
     parser.add_argument("--show", action="store_true",
                         help="show what you type instead of hiding it")
     # more options go here
+    parser.add_argument("--gui", action="store_true", help="open the graphical interface")
     parser.add_argument("--check-breach", action="store_true", help="look the password up in known data breaches (needs internet)")
     parser.add_argument("--json", action="store_true", help="print the raw report as JSON")
     return parser.parse_args()
@@ -68,6 +69,10 @@ def parse_args():
 
 def main():
     args = parse_args()
+    if args.gui:
+        from gui import run_gui
+        run_gui()
+        return
     if args.password is not None:
         password = args.password
     else:

@@ -15,6 +15,7 @@ A Python tool that analyzes password strength and provides a detailed security a
 
 ## Tech Stack
 - Python 3
+- tkinter (graphical interface, included with the standard Python installer on Windows)
 
 ## Usage
 
@@ -24,6 +25,7 @@ python main.py --show           # visible typing
 python main.py -p "MyPass"      # pass directly (stays in shell history)
 python main.py --json -p "x"    # machine-readable output
 python main.py --check-breach       # also look it up in known data breaches (needs internet)
+python main.py --gui                # open the graphical interface
 ```
 
 ## Running the tests
