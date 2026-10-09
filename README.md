@@ -1,5 +1,7 @@
 # Password Strength Analyzer
 
+![Tests](https://github.com/ghanashyamshaji-gif/PasswordStrengthAnalyzer/actions/workflows/tests.yml/badge.svg)
+
 A Python tool that analyzes password strength and provides a detailed security assessment.
 
 ## Features
